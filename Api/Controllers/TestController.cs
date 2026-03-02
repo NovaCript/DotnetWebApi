@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/v1/[controller]")]
-public class TestController : ControllerBase
+
+public class TestController : BaseController
 {
     [HttpGet]
     public string GetHelloWorldText()

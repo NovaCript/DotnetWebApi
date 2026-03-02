@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotnetWebApi.Controllers;
 
 
-[ApiController]
-[Route("api/v1/[Controller]")]
-public class HelloController : ControllerBase
+public class HelloController : BaseController
 {
     [HttpGet]
     public IActionResult Get()
