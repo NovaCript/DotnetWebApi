@@ -26,14 +26,9 @@ public class ContactManagementController : BaseController
         return Ok(contactStorage.GetAll());
     }
 
-    [HttpGet("contacts/{value}")]
-    public IActionResult GetContactById(string value)
+    [HttpGet("contacts/{id}")]
+    public IActionResult GetContactById(int id)
     {
-        if (!int.TryParse(value, out int id))
-        {
-            return BadRequest("Неверный формат ID: ожидается целое число");
-        }
-
         Contact contact = contactStorage.GetById(id);
         if (contact == null)
         {
