@@ -30,12 +30,20 @@ public class ContactStorage
         return Contacts.FirstOrDefault(c => c.Id == id);
     }
 
-    public void Add(Contact contact)
+    public bool Add(Contact contact)
     {
+        foreach (var item in Contacts)
+        {
+            if (contact.Id == item.Id)
+            {
+                return false;
+            }
+        }
         Contacts.Add(contact);
+        return true;
     }
 
-    public void Remove(int id)
+    public bool Remove(int id)
     {
         // Contact contact;
         // for (int i = 0; i < Contacts.Count; i++)
@@ -47,10 +55,16 @@ public class ContactStorage
         //         return;
         //     }
         // }
-        Contacts.Remove(GetById(id));
+        Contact contact = GetById(id);
+        if (contact == null)
+        {
+            return false;
+        }
+        Contacts.Remove(contact);
+        return true;
     }
 
-    public void Update(int id, ContactDto contactDto)
+    public bool Update(int id, ContactDto contactDto)
     {
         // Contact contact;
         // for (int i = 0; i < Contacts.Count; i++)
@@ -72,6 +86,10 @@ public class ContactStorage
         //     }
         // }
         Contact contact = GetById(id);
+        if (contact == null)
+        {
+            return false;
+        }
         if (!String.IsNullOrEmpty(contactDto.Email))
         {
             contact.Email = contactDto.Email;
@@ -79,8 +97,9 @@ public class ContactStorage
         if (!String.IsNullOrEmpty(contactDto.Name))
         {
             contact.Name = contactDto.Name;
-
         }
+        return true;
+
     }
 
 

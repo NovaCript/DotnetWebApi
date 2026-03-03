@@ -10,33 +10,58 @@ public class ContactManagementController : BaseController
     }
 
     [HttpPost("contacts")]
-    public void Create([FromBody] Contact contact)
+    public IActionResult Create([FromBody] Contact contact)
     {
-        contactStorage.Add(contact);
+        bool result = contactStorage.Add(contact);
+        if (result)
+        {
+            return CreatedAtAction(nameof(GetContactById), new { id = contact.Id }, contact);
+        }
+        return Conflict("Контакт с указаным ID существует");
     }
 
     [HttpGet("contacts")]
-    public List<Contact> GetContacts()
+    public ActionResult<List<Contact>> GetContacts()
     {
-        return contactStorage.GetAll();
+        return Ok(contactStorage.GetAll());
     }
 
-    [HttpGet("contacts/{id}")]
-    public Contact GetContactById(int id)
+    [HttpGet("contacts/{value}")]
+    public IActionResult GetContactById(string value)
     {
-        return contactStorage.GetById(id);
+        if (!int.TryParse(value, out int id))
+        {
+            return BadRequest("Неверный формат ID: ожидается целое число");
+        }
+
+        Contact contact = contactStorage.GetById(id);
+        if (contact == null)
+        {
+            return NotFound("Пользователя с таким ID не существует");
+        }
+        return Ok(contact);
     }
 
     [HttpDelete("contacts/{id}")]
-    public void DeleteContact(int id)
+    public IActionResult DeleteContact(int id)
     {
-        contactStorage.Remove(id);
+        bool result = contactStorage.Remove(id);
+        if (result)
+        {
+            return NoContent();
+        }
+        return BadRequest("Ошибка ID");
     }
 
     [HttpPut("contacts/{id}")]
-    public void UpdateContact(int id, [FromBody] ContactDto contactDto)
+    public IActionResult UpdateContact(int id, [FromBody] ContactDto contactDto)
     {
-        contactStorage.Update(id, contactDto);
+        bool result = contactStorage.Update(id, contactDto);
+        if (result)
+        {
+            return Ok(contactStorage.GetById(id));
+        }
+        return NotFound("Контакт с указаным ID не существует");
     }
 
 }
