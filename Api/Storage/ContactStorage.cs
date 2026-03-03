@@ -52,24 +52,34 @@ public class ContactStorage
 
     public void Update(int id, ContactDto contactDto)
     {
-        Contact contact;
-        for (int i = 0; i < Contacts.Count; i++)
+        // Contact contact;
+        // for (int i = 0; i < Contacts.Count; i++)
+        // {
+        //     if (Contacts[i].Id == id)
+        //     {
+        //         contact = Contacts[i];
+        //         if (!String.IsNullOrEmpty(contactDto.Email))
+        //         {
+        //             contact.Email = contactDto.Email;
+
+        //         }
+        //         if (!String.IsNullOrEmpty(contactDto.Name))
+        //         {
+        //             contact.Name = contactDto.Name;
+
+        //         }
+        //         return;
+        //     }
+        // }
+        Contact contact = GetById(id);
+        if (!String.IsNullOrEmpty(contactDto.Email))
         {
-            if (Contacts[i].Id == id)
-            {
-                contact = Contacts[i];
-                if (!String.IsNullOrEmpty(contactDto.Email))
-                {
-                    contact.Email = contactDto.Email;
+            contact.Email = contactDto.Email;
+        }
+        if (!String.IsNullOrEmpty(contactDto.Name))
+        {
+            contact.Name = contactDto.Name;
 
-                }
-                if (!String.IsNullOrEmpty(contactDto.Name))
-                {
-                    contact.Name = contactDto.Name;
-
-                }
-                return;
-            }
         }
     }
 
