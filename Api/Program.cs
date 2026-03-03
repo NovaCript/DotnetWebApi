@@ -4,6 +4,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<DataContext>();
+builder.Services.AddSingleton<ContactStorage>();
 
 var app = builder.Build();
 
