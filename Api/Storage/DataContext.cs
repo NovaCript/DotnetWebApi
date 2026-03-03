@@ -1,4 +1,11 @@
-public static class DataContext
+public class DataContext
 {
-    public static string Str = "";
+
+    public DataContext()
+    {
+        this.Str = String.Empty;
+    }
+
+
+    public string Str { get; set; }
 }
