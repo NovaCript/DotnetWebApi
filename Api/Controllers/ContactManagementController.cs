@@ -15,4 +15,10 @@ public class ContactManagementController : BaseController
         contactStorage.Contacts.Add(contact);
     }
 
+    [HttpGet("contacts")]
+    public List<Contact> GetContacts()
+    {
+        return contactStorage.Contacts;
+    }
+
 }
