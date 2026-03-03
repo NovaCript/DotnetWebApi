@@ -6,6 +6,5 @@ public class DataContext
         this.Str = String.Empty;
     }
 
-
     public string Str { get; set; }
 }

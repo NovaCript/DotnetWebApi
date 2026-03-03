@@ -25,6 +25,11 @@ public class ContactStorage
         return Contacts;
     }
 
+    public Contact GetById(int id)
+    {
+        return Contacts.FirstOrDefault(c => c.Id == id);
+    }
+
     public void Add(Contact contact)
     {
         Contacts.Add(contact);
@@ -32,16 +37,17 @@ public class ContactStorage
 
     public void Remove(int id)
     {
-        Contact contact;
-        for (int i = 0; i < Contacts.Count; i++)
-        {
-            if (Contacts[i].Id == id)
-            {
-                contact = Contacts[i];
-                Contacts.Remove(contact);
-                return;
-            }
-        }
+        // Contact contact;
+        // for (int i = 0; i < Contacts.Count; i++)
+        // {
+        //     if (Contacts[i].Id == id)
+        //     {
+        //         contact = Contacts[i];
+        //         Contacts.Remove(contact);
+        //         return;
+        //     }
+        // }
+        Contacts.Remove(GetById(id));
     }
 
     public void Update(int id, ContactDto contactDto)

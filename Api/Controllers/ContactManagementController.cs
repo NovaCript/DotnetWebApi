@@ -21,6 +21,12 @@ public class ContactManagementController : BaseController
         return contactStorage.GetAll();
     }
 
+    [HttpGet("contacts/{id}")]
+    public Contact GetContactById(int id)
+    {
+        return contactStorage.GetById(id);
+    }
+
     [HttpDelete("contacts/{id}")]
     public void DeleteContact(int id)
     {
