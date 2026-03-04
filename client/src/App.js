@@ -1,12 +1,13 @@
-function App() {
+const App = () => {
   return (
-    <div>
-      <div>
-        <div>
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-header">
           <h1>Список контактов</h1>
         </div>
-        <div>
-          <table>
+
+        <div className="card-body">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th>#</th>
@@ -16,19 +17,19 @@ function App() {
             </thead>
             <tbody>
               <tr>
-                <tb>1</tb>
-                <tb>Name 1</tb>
-                <tb>content1@email.com</tb>
+                <td>1</td>
+                <td>Name 1</td>
+                <td>content1@email.com</td>
               </tr>
               <tr>
-                <tb>2</tb>
-                <tb>Name 2</tb>
-                <tb>content2@email.com</tb>
+                <td>2</td>
+                <td>Name 2</td>
+                <td>content2@email.com</td>
               </tr>
               <tr>
-                <tb>3</tb>
-                <tb>Name 3</tb>
-                <tb>content3@email.com</tb>
+                <td>3</td>
+                <td>Name 3</td>
+                <td>content3@email.com</td>
               </tr>
             </tbody>
           </table>
@@ -36,6 +37,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
