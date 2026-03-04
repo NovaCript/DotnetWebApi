@@ -2,22 +2,28 @@ import TableContact from "./layout/TableContact/TableContact";
 import React, { useState } from "react";
 const App = () => {
   const [contacts, setContacts] = useState([
-    { id: 1, name: "Имя Фамилия 1", email: "q1@e.rt" },
-    { id: 2, name: "Имя Фамилия 2", email: "q2@e.rt" },
+    { id: 21, name: "Имя Фамилия 21", email: "q21@e.rt" },
+    { id: 12, name: "Имя Фамилия 12", email: "q12@e.rt" },
     { id: 3, name: "Имя Фамилия 3", email: "q3@e.rt" },
+    { id: 6, name: "Имя Фамилия 6", email: "q6@e.rt" },
   ]);
   const addContact = () => {
-    const item = {
-      id: Math.floor(Math.random() * 10) + 1,
-      name: "Имя Фамилия 3",
-      email: "q3@e.rt",
-    };
-    const exists = contacts.some((contact) => contact.id === item.id);
-    if (!exists) {
-      setContacts([...contacts, item]);
-    } else {
-      alert(`Ошибка: Контакт с ID ${item.id} уже существует!`);
+    let newId = -1;
+    // let maxId = Math.max(...contacts.map(e => e.id)) + 1;
+    // contacts.sort((x, y) => x.id - y.id)[contacts.length - 1].id + 1;
+    for (let i = 0; i < contacts.length; i++) {
+      const elementId = contacts[i].id;
+      if (newId < elementId) {
+        newId = elementId;
+      }
     }
+    newId++;
+    const item = {
+      id: newId,
+      name: `Имя Фамилия ${newId}`,
+      email: `q${newId}@e.rt`,
+    };
+    setContacts([...contacts, item]);
   };
 
   return (
