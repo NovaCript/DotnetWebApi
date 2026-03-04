@@ -8,11 +8,16 @@ const App = () => {
   ]);
   const addContact = () => {
     const item = {
-      id: Math.floor(Math.random() * 100),
+      id: Math.floor(Math.random() * 10) + 1,
       name: "Имя Фамилия 3",
       email: "q3@e.rt",
     };
-    setContacts([...contacts, item]);
+    const exists = contacts.some((contact) => contact.id === item.id);
+    if (!exists) {
+      setContacts([...contacts, item]);
+    } else {
+      alert(`Ошибка: Контакт с ID ${item.id} уже существует!`);
+    }
   };
 
   return (
