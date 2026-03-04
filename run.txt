@@ -4,3 +4,9 @@ dotnet watch --no-hot-reload
 dotnet new sln
 
 dotnet sln add api/file-name.csproj
+
+
+git commit --amend --no-edit
+
+
+git push --force-with-lease
