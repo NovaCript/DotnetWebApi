@@ -14,9 +14,11 @@ const TableContact = (props) => {
       <tbody>
         {props.contacts.map((contact) => (
           <RowTableContact
+            key = {contact.id}
             id={contact.id}
             name={contact.name}
             email={contact.email}
+            deleteContact = {props.deleteContact}
             // contact={contact}
           />
         ))}

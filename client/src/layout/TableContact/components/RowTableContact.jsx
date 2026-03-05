@@ -2,7 +2,7 @@ import React from "react";
 
 const RowTableContact = (props) => {
   return (
-    <tr>
+    <tr onClick={() => {props.deleteContact(props.id)}}>
       {/* <td>{props.contact.id}</td>
       <td>{props.contact.name}</td>
       <td>{props.contact.email}</td> */}
