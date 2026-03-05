@@ -6,6 +6,8 @@ const FormContact = (props) => {
     const [contactEmail, setContactEmail] = useState("");
 
     const submit = () => {
+        if (!contactName.trim()) return alert("Введите Имя контакта");
+        if (!contactEmail.trim()) return alert("Введите Email контакта")
         props.addContact(contactName, contactEmail);
     }
 
