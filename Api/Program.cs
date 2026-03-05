@@ -9,6 +9,12 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 
+builder.Services.AddCors(opt =>
+opt.AddPolicy("CorsPolicy", policy =>
+{
+    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(args[0]);
+}));
+
 builder.Services.AddSingleton<ContactStorage>();
 
 var app = builder.Build();
@@ -21,4 +27,5 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
+app.UseCors("CorsPolicy");
 app.Run();
