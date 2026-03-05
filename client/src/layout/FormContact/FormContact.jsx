@@ -9,6 +9,8 @@ const FormContact = (props) => {
         if (!contactName.trim()) return alert("Введите Имя контакта");
         if (!contactEmail.trim()) return alert("Введите Email контакта")
         props.addContact(contactName, contactEmail);
+        setContactName("");
+        setContactEmail("");
     }
 
   return (
@@ -18,13 +20,15 @@ const FormContact = (props) => {
           <div className="mb-3">
             <label className="form-label"></label>
                       <input className="form-control" type="text" placeholder="Введите имя:"
-                      onChange={(e) => {setContactName(e.target.value)}}/>
+                      value={contactName}
+                          onChange={(e) => { setContactName(e.target.value) }} />
           </div>
           <div className="mb-3">
             <label className="form-label"></label>
             {/* <input className="form-control" type="text" /> */}
                       <textarea className="form-control" rows={2} placeholder="Введите email:"
-                      onChange={(e) => {setContactEmail(e.target.value)}}></textarea>
+                      value={contactEmail}
+                          onChange={(e) => { setContactEmail(e.target.value) }}></textarea>
           </div>
         </form>
       </div>
