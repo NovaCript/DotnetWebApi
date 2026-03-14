@@ -2,17 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ContactManagementController : BaseController
 {
-    private readonly ContactStorage contactStorage;
+    private readonly IStorage storage;
 
-    public ContactManagementController(ContactStorage contactStorage)
+    public ContactManagementController(IStorage storage)
     {
-        this.contactStorage = contactStorage;
+        this.storage = storage;
     }
 
     [HttpPost("contacts")]
     public IActionResult Create([FromBody] Contact contact)
     {
-        bool result = contactStorage.Add(contact);
+        bool result = storage.Add(contact);
         if (result)
         {
             return CreatedAtAction(nameof(GetContactById), new { id = contact.Id }, contact);
@@ -23,13 +23,13 @@ public class ContactManagementController : BaseController
     [HttpGet("contacts")]
     public ActionResult<List<Contact>> GetContacts()
     {
-        return Ok(contactStorage.GetAll());
+        return Ok(storage.GetAll());
     }
 
     [HttpGet("contacts/{id}")]
     public IActionResult GetContactById(int id)
     {
-        Contact contact = contactStorage.GetById(id);
+        Contact contact = storage.GetById(id);
         if (contact == null)
         {
             return NotFound("Пользователя с таким ID не существует");
@@ -40,10 +40,10 @@ public class ContactManagementController : BaseController
     [HttpDelete("contacts/{id}")]
     public IActionResult DeleteContact(int id)
     {
-        bool result = contactStorage.Remove(id);
+        bool result = storage.Remove(id);
         if (result)
         {
-            return NoContent();
+            return Ok();
         }
         return BadRequest("Ошибка ID");
     }
@@ -51,10 +51,10 @@ public class ContactManagementController : BaseController
     [HttpPut("contacts/{id}")]
     public IActionResult UpdateContact(int id, [FromBody] ContactDto contactDto)
     {
-        bool result = contactStorage.Update(id, contactDto);
+        bool result = storage.Update(id, contactDto);
         if (result)
         {
-            return Ok(contactStorage.GetById(id));
+            return Ok(storage.GetById(id));
         }
         return NotFound("Контакт с указаным ID не существует");
     }
