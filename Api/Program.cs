@@ -1,4 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
+var stringConnection = builder.Configuration.GetConnectionString("SqliteStringConnection");
+
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(opt =>
@@ -12,10 +14,11 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddCors(opt =>
 opt.AddPolicy("CorsPolicy", policy =>
 {
-    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(args[0]);
+    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(builder.Configuration["client"]);
 }));
 
-builder.Services.AddSingleton<ContactStorage>();
+
+builder.Services.AddSingleton<IStorage>(new SqliteStorage(stringConnection));
 
 var app = builder.Build();
 
