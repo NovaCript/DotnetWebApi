@@ -1,5 +1,3 @@
-using System.Windows.Markup;
-
 public static class ApplicationServiceProvider
 {
     public static IServiceProvider AddCustomService(

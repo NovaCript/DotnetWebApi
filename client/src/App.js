@@ -4,32 +4,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const baseApiUrl = process.env.REACT_APP_API_URL;
-
+const url = `${baseApiUrl}/contacts`;
 const App = () => {
   const [contacts, setContacts] = useState([]);
 
-  const url = `${baseApiUrl}/contacts`;
   useEffect(() => {
     axios.get(url).then((res) => setContacts(res.data));
   }, []);
+
   const addContact = (contactName, contactEmail) => {
-    let newId = 0;
-    // let maxId = Math.max(...contacts.map(e => e.id)) + 1;
-    // contacts.sort((x, y) => x.id - y.id)[contacts.length - 1].id + 1;
-    for (let i = 0; i < contacts.length; i++) {
-      const elementId = contacts[i].id;
-      if (newId < elementId) {
-        newId = elementId;
-      }
-    }
-    newId++;
     const item = {
-      id: newId,
       name: contactName,
       email: contactEmail,
     };
-    axios.post(url, item);
-    setContacts([...contacts, item]);
+
+    axios
+      .post(url, item)
+      .then((responce) => setContacts([...contacts, responce.data]));
   };
 
   const deleteContact = (id) => {
