@@ -27,6 +27,7 @@ public static class ApplicationServiceCollectionExtension
         }));
 
         services.AddSingleton<IStorage>(new SqliteStorage(stringConnection));
+        services.AddScoped<ContactService>();
 
         return services;
     }

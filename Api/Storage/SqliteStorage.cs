@@ -10,13 +10,13 @@ public class SqliteStorage : IStorage
         this.connectionString = connectionString;
     }
 
-    string commandAddContact = "insert into contacts (name, email) values (@name, @email)";
+    string commandAddContact = "insert into contacts (name, email) values (@name, @email); SELECT last_insert_rowid();";
     string commandGetAllContact = "SELECT * FROM contacts";
     string commandRemove = "delete from contacts where id = @id";
     string commandUpdateContact = "update contacts set name = @name, email = @email where id = @id";
     string commandGetByIdContact = "select * from contacts where id = @id";
 
-    public bool Add(Contact contact)
+    public int Add(ContactPresentationDto contact)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -28,12 +28,13 @@ public class SqliteStorage : IStorage
         command.Parameters.AddWithValue("@email", contact.Email);
         try
         {
-            return command.ExecuteNonQuery() > 0;
+            var result = command.ExecuteScalar();
+            return Convert.ToInt32(result);
         }
         catch (SqliteException)
         {
 
-            return false;
+            return 0;
         }
     }
 
@@ -99,14 +100,13 @@ public class SqliteStorage : IStorage
         return command.ExecuteNonQuery() > 0;
     }
 
-    public bool Update(int id, ContactDto contactDto)
+    public bool Update(int id, ContactPresentationDto contactDto)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
 
         var command = connection.CreateCommand();
         command.CommandText = commandUpdateContact;
-        command.Parameters.AddWithValue("@id", id);
         command.Parameters.AddWithValue("@name", contactDto.Name);
         command.Parameters.AddWithValue("@email", contactDto.Email);
 

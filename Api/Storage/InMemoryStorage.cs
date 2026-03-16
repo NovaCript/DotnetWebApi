@@ -1,107 +1,107 @@
-public class InMemoryStorage : IStorage
-{
+// public class InMemoryStorage : IStorage
+// {
 
-    private List<Contact> Contacts { get; set; }
-
-
-    public InMemoryStorage()
-    {
-        this.Contacts = new List<Contact>();
-
-        for (int i = 1; i <= 5; i++)
-        {
-            this.Contacts.Add(new Contact()
-            {
-                Id = i,
-                Name = $"Full name {i}",
-                Email = $"{Guid.NewGuid().ToString().Substring(0, 5)}_{i}@gmail.com"
-            });
-        }
-    }
+//     private List<Contact> Contacts { get; set; }
 
 
-    public List<Contact> GetAll()
-    {
-        return Contacts;
-    }
+//     public InMemoryStorage()
+//     {
+//         this.Contacts = new List<Contact>();
 
-    public Contact GetById(int id)
-    {
-        return Contacts.FirstOrDefault(c => c.Id == id);
-    }
-
-    public bool Add(Contact contact)
-    {
-        foreach (var item in Contacts)
-        {
-            if (contact.Id == item.Id)
-            {
-                return false;
-            }
-        }
-        Contacts.Add(contact);
-        return true;
-    }
-
-    public bool Remove(int id)
-    {
-        // Contact contact;
-        // for (int i = 0; i < Contacts.Count; i++)
-        // {
-        //     if (Contacts[i].Id == id)
-        //     {
-        //         contact = Contacts[i];
-        //         Contacts.Remove(contact);
-        //         return;
-        //     }
-        // }
-        Contact contact = GetById(id);
-        if (contact == null)
-        {
-            return false;
-        }
-        Contacts.Remove(contact);
-        return true;
-    }
-
-    public bool Update(int id, ContactDto contactDto)
-    {
-        // Contact contact;
-        // for (int i = 0; i < Contacts.Count; i++)
-        // {
-        //     if (Contacts[i].Id == id)
-        //     {
-        //         contact = Contacts[i];
-        //         if (!String.IsNullOrEmpty(contactDto.Email))
-        //         {
-        //             contact.Email = contactDto.Email;
-
-        //         }
-        //         if (!String.IsNullOrEmpty(contactDto.Name))
-        //         {
-        //             contact.Name = contactDto.Name;
-
-        //         }
-        //         return;
-        //     }
-        // }
-        Contact contact = GetById(id);
-        if (contact == null)
-        {
-            return false;
-        }
-        if (!String.IsNullOrEmpty(contactDto.Email))
-        {
-            contact.Email = contactDto.Email;
-        }
-        if (!String.IsNullOrEmpty(contactDto.Name))
-        {
-            contact.Name = contactDto.Name;
-        }
-        return true;
-
-    }
+//         for (int i = 1; i <= 5; i++)
+//         {
+//             this.Contacts.Add(new Contact()
+//             {
+//                 Id = i,
+//                 Name = $"Full name {i}",
+//                 Email = $"{Guid.NewGuid().ToString().Substring(0, 5)}_{i}@gmail.com"
+//             });
+//         }
+//     }
 
 
+//     public List<Contact> GetAll()
+//     {
+//         return Contacts;
+//     }
 
-}
+//     public Contact GetById(int id)
+//     {
+//         return Contacts.FirstOrDefault(c => c.Id == id);
+//     }
+
+//     public bool Add(Contact contact)
+//     {
+//         foreach (var item in Contacts)
+//         {
+//             if (contact.Id == item.Id)
+//             {
+//                 return false;
+//             }
+//         }
+//         Contacts.Add(contact);
+//         return true;
+//     }
+
+//     public bool Remove(int id)
+//     {
+//         // Contact contact;
+//         // for (int i = 0; i < Contacts.Count; i++)
+//         // {
+//         //     if (Contacts[i].Id == id)
+//         //     {
+//         //         contact = Contacts[i];
+//         //         Contacts.Remove(contact);
+//         //         return;
+//         //     }
+//         // }
+//         Contact contact = GetById(id);
+//         if (contact == null)
+//         {
+//             return false;
+//         }
+//         Contacts.Remove(contact);
+//         return true;
+//     }
+
+//     public bool Update(int id, ContactDto contactDto)
+//     {
+//         // Contact contact;
+//         // for (int i = 0; i < Contacts.Count; i++)
+//         // {
+//         //     if (Contacts[i].Id == id)
+//         //     {
+//         //         contact = Contacts[i];
+//         //         if (!String.IsNullOrEmpty(contactDto.Email))
+//         //         {
+//         //             contact.Email = contactDto.Email;
+
+//         //         }
+//         //         if (!String.IsNullOrEmpty(contactDto.Name))
+//         //         {
+//         //             contact.Name = contactDto.Name;
+
+//         //         }
+//         //         return;
+//         //     }
+//         // }
+//         Contact contact = GetById(id);
+//         if (contact == null)
+//         {
+//             return false;
+//         }
+//         if (!String.IsNullOrEmpty(contactDto.Email))
+//         {
+//             contact.Email = contactDto.Email;
+//         }
+//         if (!String.IsNullOrEmpty(contactDto.Name))
+//         {
+//             contact.Name = contactDto.Name;
+//         }
+//         return true;
+
+//     }
+
+
+
+// }
