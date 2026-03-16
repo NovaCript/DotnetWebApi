@@ -13,7 +13,7 @@ public class ContactManagementController : BaseController
     }
 
     [HttpPost("contacts")]
-    public IActionResult Create([FromBody] ContactPresentationDto contact)
+    public IActionResult Create([FromBody] ContactCreateDto contact)
     {
         var result = contactService.CreateContact(contact);
         if (result != null)
@@ -52,7 +52,7 @@ public class ContactManagementController : BaseController
     }
 
     [HttpPut("contacts/{id}")]
-    public IActionResult UpdateContact(int id, [FromBody] ContactPresentationDto contactDto)
+    public IActionResult UpdateContact(int id, [FromBody] ContactCreateDto contactDto)
     {
         bool result = storage.Update(id, contactDto);
         if (result)

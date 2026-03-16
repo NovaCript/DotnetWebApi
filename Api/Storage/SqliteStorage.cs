@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.Data.Sqlite;
 
 public class SqliteStorage : IStorage
@@ -16,7 +15,7 @@ public class SqliteStorage : IStorage
     string commandUpdateContact = "update contacts set name = @name, email = @email where id = @id";
     string commandGetByIdContact = "select * from contacts where id = @id";
 
-    public int Add(ContactPresentationDto contact)
+    public int Add(ContactCreateDto contact)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -26,16 +25,8 @@ public class SqliteStorage : IStorage
         command.CommandText = commandAddContact;
         command.Parameters.AddWithValue("@name", contact.Name);
         command.Parameters.AddWithValue("@email", contact.Email);
-        try
-        {
-            var result = command.ExecuteScalar();
-            return Convert.ToInt32(result);
-        }
-        catch (SqliteException)
-        {
-
-            return 0;
-        }
+        var result = command.ExecuteScalar();
+        return Convert.ToInt32(result);
     }
 
     public List<Contact> GetAll()
@@ -100,7 +91,7 @@ public class SqliteStorage : IStorage
         return command.ExecuteNonQuery() > 0;
     }
 
-    public bool Update(int id, ContactPresentationDto contactDto)
+    public bool Update(int id, ContactCreateDto contactDto)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
