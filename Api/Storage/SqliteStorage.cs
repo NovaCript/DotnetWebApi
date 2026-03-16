@@ -107,6 +107,7 @@ public class SqliteStorage : IStorage
 
         var command = connection.CreateCommand();
         command.CommandText = commandUpdateContact;
+        command.Parameters.AddWithValue("@id", id);
         command.Parameters.AddWithValue("@name", contactDto.Name);
         command.Parameters.AddWithValue("@email", contactDto.Email);
 
