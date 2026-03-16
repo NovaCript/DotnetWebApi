@@ -4,18 +4,21 @@ public class ContactManagementController : BaseController
 {
     private readonly IStorage storage;
 
-    public ContactManagementController(IStorage storage)
+    private readonly ContactService contactService;
+
+    public ContactManagementController(IStorage storage, ContactService contactService)
     {
         this.storage = storage;
+        this.contactService = contactService;
     }
 
     [HttpPost("contacts")]
-    public IActionResult Create([FromBody] Contact contact)
+    public IActionResult Create([FromBody] ContactPresentationDto contact)
     {
-        bool result = storage.Add(contact);
-        if (result)
+        var result = contactService.CreateContact(contact);
+        if (result != null)
         {
-            return CreatedAtAction(nameof(GetContactById), new { id = contact.Id }, contact);
+            return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
         }
         return Conflict("Контакт с указаным ID существует");
     }
@@ -49,7 +52,7 @@ public class ContactManagementController : BaseController
     }
 
     [HttpPut("contacts/{id}")]
-    public IActionResult UpdateContact(int id, [FromBody] ContactDto contactDto)
+    public IActionResult UpdateContact(int id, [FromBody] ContactPresentationDto contactDto)
     {
         bool result = storage.Update(id, contactDto);
         if (result)
