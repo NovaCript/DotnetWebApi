@@ -1,0 +1,4 @@
+interface IInitializer
+{
+    void Initialize();
+}
