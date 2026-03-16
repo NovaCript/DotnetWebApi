@@ -7,13 +7,13 @@ public class ContactService
         _storage = storage;
     }
 
-    public ContactPersistentDto CreateContact(ContactPresentationDto dto)
+    public ContactReadDto CreateContact(ContactCreateDto dto)
     {
         int newId = _storage.Add(dto);
 
         if (newId == 0) return null;
 
-        return new ContactPersistentDto
+        return new ContactReadDto
         {
             Id = newId,
             Name = dto.Name,
