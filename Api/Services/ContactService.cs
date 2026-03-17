@@ -4,7 +4,7 @@ public class ContactService
 
     public ContactService(IStorage storage)
     {
-        _storage = storage;
+        this._storage = storage;
     }
 
     public ContactReadDto CreateContact(ContactCreateDto dto)
