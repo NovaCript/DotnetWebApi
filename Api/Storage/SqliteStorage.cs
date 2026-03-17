@@ -29,9 +29,9 @@ public class SqliteStorage : IStorage
         return Convert.ToInt32(result);
     }
 
-    public List<Contact> GetAll()
+    public List<ContactReadDto> GetAll()
     {
-        var contact = new List<Contact>();
+        var contact = new List<ContactReadDto>();
 
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -43,7 +43,7 @@ public class SqliteStorage : IStorage
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            contact.Add(new Contact()
+            contact.Add(new ContactReadDto()
             {
                 Id = reader.GetInt32(0),
                 Name = reader.GetString(1),
@@ -55,9 +55,9 @@ public class SqliteStorage : IStorage
         return contact;
     }
 
-    public Contact GetById(int id)
+    public ContactReadDto GetById(int id)
     {
-        Contact contact = new Contact();
+        ContactReadDto contact = new ContactReadDto();
 
 
         using var connection = new SqliteConnection(connectionString);

@@ -20,4 +20,25 @@ public class ContactService
             Email = dto.Email
         };
     }
+
+    public List<ContactReadDto> GetAllContact()
+    {
+        return _storage.GetAll();
+    }
+
+    public ContactReadDto GetContactById(int id)
+    {
+        return _storage.GetById(id);
+    }
+
+    public bool RemoveContact(int id)
+    {
+        return _storage.Remove(id);
+    }
+
+    public bool UpdateContact(int id, ContactCreateDto contactDto)
+    {
+        return _storage.Update(id, contactDto);
+    }
+
 }
