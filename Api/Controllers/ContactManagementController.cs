@@ -2,13 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ContactManagementController : BaseController
 {
-    private readonly IStorage storage;
 
     private readonly ContactService contactService;
 
-    public ContactManagementController(IStorage storage, ContactService contactService)
+    public ContactManagementController(ContactService contactService)
     {
-        this.storage = storage;
         this.contactService = contactService;
     }
 
@@ -26,13 +24,13 @@ public class ContactManagementController : BaseController
     [HttpGet("contacts")]
     public ActionResult<List<Contact>> GetContacts()
     {
-        return Ok(storage.GetAll());
+        return Ok(contactService.GetAllContact());
     }
 
     [HttpGet("contacts/{id}")]
     public IActionResult GetContactById(int id)
     {
-        Contact contact = storage.GetById(id);
+        ContactReadDto contact = contactService.GetContactById(id);
         if (contact == null)
         {
             return NotFound("Пользователя с таким ID не существует");
@@ -43,7 +41,7 @@ public class ContactManagementController : BaseController
     [HttpDelete("contacts/{id}")]
     public IActionResult DeleteContact(int id)
     {
-        bool result = storage.Remove(id);
+        bool result = contactService.RemoveContact(id);
         if (result)
         {
             return Ok();
@@ -54,10 +52,10 @@ public class ContactManagementController : BaseController
     [HttpPut("contacts/{id}")]
     public IActionResult UpdateContact(int id, [FromBody] ContactCreateDto contactDto)
     {
-        bool result = storage.Update(id, contactDto);
+        bool result = contactService.UpdateContact(id, contactDto);
         if (result)
         {
-            return Ok(storage.GetById(id));
+            return Ok(contactService.GetContactById(id));
         }
         return NotFound("Контакт с указаным ID не существует");
     }
