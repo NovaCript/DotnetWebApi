@@ -9,36 +9,66 @@ public class ContactService
 
     public ContactReadDto CreateContact(ContactCreateDto dto)
     {
-        int newId = _storage.Add(dto);
+        var contact = new Contact
+        {
+            Name = dto.Name,
+            Email = dto.Email
+        };
 
-        if (newId == 0) return null;
+        var result = _storage.Add(contact);
+
+        if (result == null) return null;
 
         return new ContactReadDto
         {
-            Id = newId,
-            Name = dto.Name,
-            Email = dto.Email
+            Id = result.Id,
+            Name = result.Name,
+            Email = result.Email
         };
     }
 
     public List<ContactReadDto> GetAllContact()
     {
-        return _storage.GetAll();
+        var contacts = _storage.GetAll();
+
+        return contacts.Select(c => new ContactReadDto
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Email = c.Email
+        }).ToList();
     }
 
     public ContactReadDto GetContactById(int id)
     {
-        return _storage.GetById(id);
+        var contact = _storage.GetById(id);
+        if (contact == null) return null;
+
+        return new ContactReadDto
+        {
+            Id = contact.Id,
+            Name = contact.Name,
+            Email = contact.Email
+        };
     }
 
     public bool RemoveContact(int id)
     {
+
         return _storage.Remove(id);
     }
 
     public bool UpdateContact(int id, ContactCreateDto contactDto)
     {
-        return _storage.Update(id, contactDto);
+
+        var contact = new Contact
+        {
+            Id = id,
+            Name = contactDto.Name,
+            Email = contactDto.Email
+        };
+
+        return _storage.Update(id, contact);
     }
 
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
 public static class ApplicationServiceCollectionExtension
@@ -11,6 +12,7 @@ public static class ApplicationServiceCollectionExtension
         var stringConnection = configuration.GetConnectionString("SqliteStringConnection");
 
         services.AddControllers();
+        services.AddDbContext<SqliteDbContext>(opt => opt.UseSqlite(stringConnection));
 
         services.AddSwaggerGen(opt =>
         {
@@ -26,7 +28,7 @@ public static class ApplicationServiceCollectionExtension
             policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(configuration["client"]);
         }));
 
-        services.AddSingleton<IStorage>(new SqliteStorage(stringConnection));
+        services.AddScoped<IStorage, SqliteEfStorage>();
         services.AddScoped<ContactService>();
 
         return services;

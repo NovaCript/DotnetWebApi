@@ -15,7 +15,7 @@ public class SqliteStorage : IStorage
     string commandUpdateContact = "update contacts set name = @name, email = @email where id = @id";
     string commandGetByIdContact = "select * from contacts where id = @id";
 
-    public int Add(ContactCreateDto contact)
+    public Contact Add(Contact contact)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -26,12 +26,13 @@ public class SqliteStorage : IStorage
         command.Parameters.AddWithValue("@name", contact.Name);
         command.Parameters.AddWithValue("@email", contact.Email);
         var result = command.ExecuteScalar();
-        return Convert.ToInt32(result);
+        contact.Id = Convert.ToInt32(result);
+        return contact;
     }
 
-    public List<ContactReadDto> GetAll()
+    public List<Contact> GetAll()
     {
-        var contact = new List<ContactReadDto>();
+        var contact = new List<Contact>();
 
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -43,7 +44,7 @@ public class SqliteStorage : IStorage
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            contact.Add(new ContactReadDto()
+            contact.Add(new Contact()
             {
                 Id = reader.GetInt32(0),
                 Name = reader.GetString(1),
@@ -55,9 +56,9 @@ public class SqliteStorage : IStorage
         return contact;
     }
 
-    public ContactReadDto GetById(int id)
+    public Contact GetById(int id)
     {
-        ContactReadDto contact = new ContactReadDto();
+        Contact contact = new Contact();
 
 
         using var connection = new SqliteConnection(connectionString);
@@ -91,7 +92,7 @@ public class SqliteStorage : IStorage
         return command.ExecuteNonQuery() > 0;
     }
 
-    public bool Update(int id, ContactCreateDto contactDto)
+    public bool Update(int id, Contact contact)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
@@ -99,8 +100,8 @@ public class SqliteStorage : IStorage
         var command = connection.CreateCommand();
         command.CommandText = commandUpdateContact;
         command.Parameters.AddWithValue("@id", id);
-        command.Parameters.AddWithValue("@name", contactDto.Name);
-        command.Parameters.AddWithValue("@email", contactDto.Email);
+        command.Parameters.AddWithValue("@name", contact.Name);
+        command.Parameters.AddWithValue("@email", contact.Email);
 
         return command.ExecuteNonQuery() > 0;
     }

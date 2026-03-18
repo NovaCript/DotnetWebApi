@@ -1,8 +1,8 @@
 public interface IStorage
 {
-    public List<ContactReadDto> GetAll();
-    public ContactReadDto GetById(int id);
-    public int Add(ContactCreateDto contact);
+    public List<Contact> GetAll();
+    public Contact GetById(int id);
+    public Contact Add(Contact contact);
     public bool Remove(int id);
-    public bool Update(int id, ContactCreateDto contactDto);
+    public bool Update(int id, Contact contact);
 }
