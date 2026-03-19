@@ -31,11 +31,11 @@ public class ContactManagementController : BaseController
     public IActionResult GetContactById(int id)
     {
         ContactReadDto contact = _contactService.GetContactById(id);
-        if (contact == null)
+        if (contact != null)
         {
-            return NotFound("Пользователя с таким ID не существует");
+            return Ok(contact);
         }
-        return Ok(contact);
+        return NotFound("Пользователя с таким ID не существует");
     }
 
     [HttpDelete("contacts/{id}")]
