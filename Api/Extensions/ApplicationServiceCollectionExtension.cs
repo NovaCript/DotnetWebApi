@@ -30,6 +30,7 @@ public static class ApplicationServiceCollectionExtension
 
         services.AddScoped<IStorage, SqliteEfStorage>();
         services.AddScoped<ContactService>();
+        services.AddScoped<IInitializer, SqliteEfFakerInitializer>();
 
         return services;
     }
