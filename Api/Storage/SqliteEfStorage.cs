@@ -1,4 +1,4 @@
-public class SqliteEfStorage : IStorage
+public class SqliteEfStorage : IPaginationStorage
 {
 
     private readonly SqliteDbContext _context;
@@ -23,6 +23,18 @@ public class SqliteEfStorage : IStorage
     public Contact GetById(int id)
     {
         return _context.Contacts.Find(id);
+    }
+
+    public (List<Contact>, int TotalCount) GetContactsPaged(int pageNumber, int pageSize)
+    {
+        int total = _context.Contacts.Count();
+
+        List<Contact> contacts = _context.Contacts
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+
+        return (contacts, total);
     }
 
     public bool Remove(int id)

@@ -60,4 +60,12 @@ public class ContactManagementController : BaseController
         return NotFound("Контакт с указаным ID не существует");
     }
 
+    [HttpGet("contacts/page")]
+    public IActionResult GetContactsPaged(int pageNumber = 1, int pageSize = 5)
+    {
+        var result = _contactService.GetContactsPaged(pageNumber, pageSize);
+
+        return Ok(result);
+    }
+
 }

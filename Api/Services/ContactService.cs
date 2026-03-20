@@ -1,8 +1,8 @@
 public class ContactService
 {
-    private readonly IStorage _storage;
+    private readonly IPaginationStorage _storage;
 
-    public ContactService(IStorage storage)
+    public ContactService(IPaginationStorage storage)
     {
         this._storage = storage;
     }
@@ -69,6 +69,16 @@ public class ContactService
         };
 
         return _storage.Update(id, contact);
+    }
+
+    public PagedResponse GetContactsPaged(int pageNumber, int pageSize)
+    {
+        var (contacts, total) = _storage.GetContactsPaged(pageNumber, pageSize);
+
+        return new
+        PagedResponse(
+            contacts, total, pageNumber, pageSize
+        );
     }
 
 }

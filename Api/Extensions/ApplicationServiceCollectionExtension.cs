@@ -28,7 +28,7 @@ public static class ApplicationServiceCollectionExtension
             policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(configuration["client"]);
         }));
 
-        services.AddScoped<IStorage, SqliteEfStorage>();
+        services.AddScoped<IPaginationStorage, SqliteEfStorage>();
         services.AddScoped<ContactService>();
         services.AddScoped<IInitializer, SqliteEfFakerInitializer>();
 
